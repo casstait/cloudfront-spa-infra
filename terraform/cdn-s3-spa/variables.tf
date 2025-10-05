@@ -20,13 +20,8 @@ variable "deployment_repository" {
   default     = ""
 }
 
-variable "domain" {
+variable "registered_domain" {
   description = "The registered domain name of the brand for DNS resolution to a configured hosted zone in the core-services-infra repo"
-  type        = string
-}
-
-variable "environment" {
-  description = "Environment the resources will be provisioned for. E.g. prod"
   type        = string
 }
 
@@ -46,4 +41,17 @@ variable "ip_allow_ipv6" {
   type        = list(string)
   description = "List of IPv6s to allow through the WAF"
   default     = []
+}
+
+variable "region" {
+  type        = string
+  description = "Main AWS region to provision resources for the workspace"
+  default     = "ap-southeast-2"
+}
+
+variable "cloudfront_region" {
+  type        = string
+  description = "Required AWS region to provision Cloudfront and WAF resources for the workspace"
+  default     = "us-east-1"
+
 }

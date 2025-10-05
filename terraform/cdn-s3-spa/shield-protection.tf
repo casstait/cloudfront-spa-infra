@@ -4,7 +4,7 @@ resource "aws_shield_protection" "cloudfront_cdn" {
 }
 
 resource "aws_shield_application_layer_automatic_response" "cloudfront_cdn" {
-  ## Shield protection must be deployed before enabling automatic response, otherwise will error
+  ## Shield protection must be deployed before enabling automatic response
   depends_on = [aws_shield_protection.cloudfront_cdn]
 
   resource_arn = aws_cloudfront_distribution.this.arn

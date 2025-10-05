@@ -3,7 +3,7 @@
 ################################################################################
 
 data "aws_iam_openid_connect_provider" "github" {
-  url = "https://token.actions/githubusercontent.com"
+  url = "https://token.actions.githubusercontent.com"
 }
 
 resource "aws_iam_role" "deploy_s3_client_objects_role" {
@@ -27,8 +27,8 @@ data "aws_iam_policy_document" "deployment_role_assume_role_policy" {
     condition {
       test = "ForAnyValue:StringLike"
       values = [
-        "repo:VGW/${var.deployment_repository}:ref:refs/heads/main",
-        "repo:VGW/${var.deployment_repository}:environment:${var.environment}"
+        "repo:casstait/cloudfront-spa-infra:ref:refs/heads/main",
+        "repo:casstait/cloudfront-spa-infra:environment:dev"
       ]
       variable = "token.actions.githubusercontent.com:sub"
     }

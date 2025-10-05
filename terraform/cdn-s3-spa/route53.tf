@@ -3,12 +3,12 @@
 ################################################################################
 
 data "aws_route53_zone" "this" {
-  name = var.domain
+  name = var.registered_domain
 }
 
 resource "aws_route53_record" "client_ip4" {
   zone_id = data.aws_route53_zone.this.zone_id
-  name    = var.domain
+  name    = var.registered_domain
   type    = "A"
 
   alias {
@@ -20,7 +20,7 @@ resource "aws_route53_record" "client_ip4" {
 
 resource "aws_route53_record" "client_ip6" {
   zone_id = data.aws_route53_zone.this.zone_id
-  name    = var.domain
+  name    = var.registered_domain
   type    = "AAAA"
 
   alias {

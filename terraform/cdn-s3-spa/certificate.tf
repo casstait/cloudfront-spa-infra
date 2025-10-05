@@ -4,9 +4,9 @@
 
 resource "aws_acm_certificate" "cloudfront" {
   # Cloudfront certificates must be provisioned in the N. Virginia region
-  region = "us-east-1"
+  region = var.cloudfront_region
 
-  domain_name       = var.domain
+  domain_name       = var.registered_domain
   validation_method = "DNS"
 
   lifecycle {
@@ -28,7 +28,7 @@ resource "aws_route53_record" "cloudfront_certificate_validation" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.this.zone_id
+  zone_id         = aws_route53_zone.this.zone_id
 }
 
 resource "aws_acm_certificate_validation" "cloudfront" {

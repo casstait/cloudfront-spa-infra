@@ -4,7 +4,7 @@
 
 resource "aws_wafv2_web_acl" "this" {
   # WAFs for the CDN must be deployed in the N. Virginia region
-  region = "us-east-1"
+  region = var.cloudfront_region
 
   name        = "spa-client-cloudfront-waf"
   description = "WAF instance with standard rules to be used with CloudFront CDN."
@@ -214,7 +214,7 @@ resource "aws_wafv2_web_acl" "this" {
 }
 
 resource "aws_wafv2_ip_set" "ip_allow_ipv4" {
-  region = "us-east-1"
+  region = var.cloudfront_region
 
   name               = "ip-allow-ipv4"
   description        = "A set of allowed IPv4s addresses"
@@ -226,7 +226,7 @@ resource "aws_wafv2_ip_set" "ip_allow_ipv4" {
 }
 
 resource "aws_wafv2_ip_set" "ip_allow_ipv6" {
-  region = "us-east-1"
+  region = var.cloudfront_region
 
   name               = "ip-allow-ipv6"
   description        = "A set of allowed IPv6s addresses"
@@ -242,17 +242,17 @@ resource "aws_wafv2_ip_set" "ip_allow_ipv6" {
 ################################################################################
 
 resource "aws_wafv2_web_acl_logging_configuration" "this" {
-  region = "us-east-1"
+  region = var.cloudfront_region
 
   log_destination_configs = [aws_cloudwatch_log_group.waf_logs.arn]
   resource_arn            = aws_wafv2_web_acl.this.arn
 }
 
 resource "aws_cloudwatch_log_group" "waf_logs" {
-  region = "us-east-1"
+  region = var.cloudfront_region
 
   # NOTE: WAF log group names must be prefixed with "aws-waf-logs-*"
   # https://docs.aws.amazon.com/waf/latest/developerguide/logging-cw-logs.html#logging-cw-logs-naming
-  name              = "aws-waf-logs-cdn/${var.environment}/"
+  name              = "aws-waf-logs-cdn/${aws_wafv2_web_acl.this.name}/"
   retention_in_days = 30
 }

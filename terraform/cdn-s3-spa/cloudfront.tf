@@ -56,13 +56,13 @@ resource "aws_cloudfront_origin_request_policy" "this" {
 
 resource "aws_cloudfront_distribution" "this" {
   enabled             = true
-  comment             = "CDN for the single page aplication"
+  comment             = "CDN for the single page application"
   default_root_object = "index.html"
 
   is_ipv6_enabled = true
 
   web_acl_id = aws_wafv2_web_acl.this.arn
-  aliases    = [var.domain]
+  aliases    = [var.registered_domain]
 
   origin {
     domain_name              = aws_s3_bucket.client.bucket_regional_domain_name
@@ -89,7 +89,7 @@ resource "aws_cloudfront_distribution" "this" {
 
   logging_config {
     bucket          = "${aws_s3_bucket.logs.id}.s3.amazonaws.com"
-    prefix          = "cloudfront-s3-cdn/spa-client/${var.environment}/"
+    prefix          = "cloudfront-s3-cdn/spa-client/"
     include_cookies = false
   }
 
