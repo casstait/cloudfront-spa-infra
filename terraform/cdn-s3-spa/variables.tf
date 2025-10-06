@@ -1,3 +1,13 @@
+variable "bucket_versioning" {
+  type = string
+  description = "Controls whether to enable versioning on an S3 bucket"
+  default     = "Disabled"
+  validation {
+    condition     = contains(["t2.micro", "t3.small", "m5.large"], var.instance_type)
+    error_message = "Invalid string option for bucket versioning. Must be one of: Enabled, Suspended or Disabled."
+  }
+}
+
 variable "custom_error_response" {
   description = "Configuration for a custom error response page for redirect. Defaults to 404 status codes returning a 404 response and redirecting to the `/error.html` path."
   type = object({

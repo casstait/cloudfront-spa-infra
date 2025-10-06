@@ -48,7 +48,7 @@ resource "aws_s3_bucket_public_access_block" "client" {
 resource "aws_s3_bucket_versioning" "client" {
   bucket = aws_s3_bucket.client.id
   versioning_configuration {
-    status = "Enabled"
+    status = var.bucket_versioning
   }
 }
 

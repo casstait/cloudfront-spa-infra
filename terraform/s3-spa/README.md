@@ -16,7 +16,7 @@ NOTE: This IaC will incur ongoing costs if kept deployed over 24 hours. To ensur
 
 ## Pre-requisites
 
-Select an AWS domain to provision your resources. By default the `ap-southeast-2` is selected.
+Select an AWS region to provision your resources. By default the `ap-southeast-2` is selected.
 
 ## Provisioning Infrastructure
 
